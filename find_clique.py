@@ -55,11 +55,22 @@ def search_for_users(query, token):
     users = results.get('items', [])
     total_count = results.get('total_count', 0)
 
-    url = [u["url"] for u in users]
-    for i in url:
-        search_hireable_by_user = requests.get(i + "?client_id=111de754c948895a4601&client_secret=30506b2f0a71e33be99e57ecdb71670554e7aa8f")
-        print(search_hireable_by_user.json())
-        # Pegar os json -> hireable
+    j = 0
+    user = [u for u in users]
+    for i in user:
+        search_hireable_by_user = requests.get(i['url'] + "?client_id=111de754c948895a4601&client_secret=30506b2f0a71e33be99e57ecdb71670554e7aa8f")
+        object_user = search_hireable_by_user.json()
+        # Adicionar cada login numa lista depois
+        hireable = object_user['hireable']
+        if hireable == True:
+            """ Colocar a lógica para comparar se são usuários em comum aqui
+                    if followers[i] == following[i]
+                        -> salva cada login numa lista
+            """
+            print(i['login'] + " - hireable: " + str(hireable))
+            j += 1
+    print(j)
+
 
 
     if total_count > 100:
