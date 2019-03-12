@@ -56,7 +56,7 @@ def search_for_users(query, token):
     total_count = results.get('total_count', 0)
 
     j = 0
-    hireables = []
+    list_hireables = []
     user = [u for u in users]
     for i in user:
         search_hireable_by_user = requests.get(i['url'] + "?client_id=111de754c948895a4601&client_secret=30506b2f0a71e33be99e57ecdb71670554e7aa8f")
@@ -65,7 +65,7 @@ def search_for_users(query, token):
         profile = object_user['login']
         hireable = object_user['hireable']
         if hireable == True:
-            hireables.append(profile)
+            list_hireables.append(profile)
             #print(i['login'] + " - hireable: " + str(hireable))
             j += 1
     #print(j)
@@ -76,15 +76,15 @@ def search_for_users(query, token):
         for l in range(i + 1, j):
             #print(hireables[i] + " - " + hireables[l])
             #print("https://api.github.com/users/" + hireables[i] + "/following/" + hireables[l] + oauth)
-            check_follow = requests.get("https://api.github.com/users/" + hireables[i] + "/following/" + hireables[l] + oauth)
-            check_follow_back = requests.get("https://api.github.com/users/" + hireables[l] + "/following/" + hireables[i] + oauth)
+            check_follow = requests.get("https://api.github.com/users/" + list_hireables[i] + "/following/" + list_hireables[l] + oauth)
+            check_follow_back = requests.get("https://api.github.com/users/" + list_hireables[l] + "/following/" + list_hireables[i] + oauth)
             check_follow = check_follow.status_code
             check_follow_back = check_follow_back.status_code
             print(check_follow)
             print(check_follow_back)
             if check_follow == 204 and check_follow_back == 204:
                 #They follow each other
-                users = [hireables[i], hireables[l]]
+                users = [list_hireables[i], list_hireables[l]]
                 list_of_reciprocity.append(users)
 
     print(list_of_reciprocity)
