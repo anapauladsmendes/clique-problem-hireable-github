@@ -1,6 +1,6 @@
 import sys
 import requests
-import json
+import ujson as json
 from requests.auth import HTTPBasicAuth
 
 BASE_URL = 'https://api.github.com'
@@ -76,8 +76,8 @@ def search_for_users(query, token):
             check_follow_back = requests.get(USERS_URL + list_hireables[l] + "/following/" + list_hireables[i] + OAUTH)
             check_follow = check_follow.status_code
             check_follow_back = check_follow_back.status_code
-            print(check_follow)
-            print(check_follow_back)
+            print(list_hireables[i] + " following " + list_hireables[l] + "-" + str(check_follow))
+            print(list_hireables[l] + " following " + list_hireables[i] + "-" + str(check_follow_back))
             if check_follow == 204 and check_follow_back == 204:
                 users = [list_hireables[i], list_hireables[l]]
                 list_of_reciprocity.append(users)
@@ -97,16 +97,6 @@ def search_for_users(query, token):
             users.extend(results.get('items', []))
     return users
 
-def get_user_details(user, token):
-    payload = {
-        'access_token': token,
-    }
-    res = requests.get(USERS_URL + user['login'], params=payload)
-
-    if res.status_code == 200:
-        user['details'] = res.json()
-
-
 if __name__ == '__main__':
     if 'CREDS' not in globals():
         if len(sys.argv) > 1:
@@ -121,5 +111,3 @@ if __name__ == '__main__':
 
     users = search_for_users(SEARCH_QUERY, access_token)
     print("Encerrou a aplicação!")
-    for user in users:
-        get_user_details(user, access_token)
