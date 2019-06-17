@@ -12,7 +12,7 @@ GENERIC_HEADER = {"User-Agent": 'Find Some Candidates'}
 PREVIEW_HEADER = {"Accept": 'application/vnd.github.preview'}
 PREVIEW_HEADER.update(GENERIC_HEADER)
 
-SEARCH_QUERY = 'location:Teresina'
+SEARCH_QUERY = 'location:Parnaíba'
 
 USER_GITHUB = ''
 PASSWORD = ''
@@ -52,6 +52,8 @@ def search_for_users(query, token):
     users = results.get('items', [])
     total_count = results.get('total_count', 0)
 
+    ## Users hireable ---------------------------------------------------------------------------------------------------
+
     j = 0
     list_hireables = []
     user = [u for u in users]
@@ -64,9 +66,13 @@ def search_for_users(query, token):
             print(i['login'] + " - hireable: " + str(hireable))
             j += 1
 
-    f = open('original_graph.json', 'w')
+    f = open('users_hireable.json', 'w')
     f.write(json.dumps(list_hireables))
     f.close()
+
+    ## -----------------------------------------------------------------------------------------------------------------
+
+    ## Find cliques ----------------------------------------------------------------------------------------------------
 
     list_of_reciprocity = []
 
@@ -82,10 +88,17 @@ def search_for_users(query, token):
                 users = [list_hireables[i], list_hireables[l]]
                 list_of_reciprocity.append(users)
 
-    f = open('maximum_clique.json', 'w')
+    f = open('cliques.json', 'w')
     f.write(json.dumps(list_of_reciprocity))
     f.close()
     print(list_of_reciprocity)
+
+    ## -----------------------------------------------------------------------------------------------------------------
+
+    ## Find maximum clique ----------------------------------------------------------------------------------------------------
+
+
+    ## -----------------------------------------------------------------------------------------------------------------
 
     if total_count > 100:
         pages = results['total_count'] // 100
