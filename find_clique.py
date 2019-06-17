@@ -14,11 +14,11 @@ PREVIEW_HEADER.update(GENERIC_HEADER)
 
 SEARCH_QUERY = 'location:Parnaíba'
 
-USER_GITHUB = ''
-PASSWORD = ''
+USER_GITHUB = 'q726738'
+PASSWORD = 'l?xNU7(16A|}+Ms'
 CREDS = (USER_GITHUB, PASSWORD)
-CLIENT_ID = ''
-CLIENT_SECRET = ''
+CLIENT_ID = '0ccc1c2682b5902cd9a1'
+CLIENT_SECRET = '97495b935f65db6dc128c17191837d432723c3f0'
 OAUTH = '?client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET
 
 def get_access_token(username, password):
@@ -92,11 +92,6 @@ def search_for_users(query, token):
     f.write(json.dumps(list_of_reciprocity))
     f.close()
     print(list_of_reciprocity)
-
-    ## -----------------------------------------------------------------------------------------------------------------
-
-    ## Find maximum clique ----------------------------------------------------------------------------------------------------
-
 
     ## -----------------------------------------------------------------------------------------------------------------
 
