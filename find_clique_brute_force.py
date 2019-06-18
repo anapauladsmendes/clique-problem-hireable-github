@@ -12,13 +12,13 @@ GENERIC_HEADER = {"User-Agent": 'Find Some Candidates'}
 PREVIEW_HEADER = {"Accept": 'application/vnd.github.preview'}
 PREVIEW_HEADER.update(GENERIC_HEADER)
 
-SEARCH_QUERY = 'location:Parnaíba'
+SEARCH_QUERY = 'location:Teresina'
 
-USER_GITHUB = 'q726738'
-PASSWORD = 'l?xNU7(16A|}+Ms'
+USER_GITHUB = ''
+PASSWORD = ''
 CREDS = (USER_GITHUB, PASSWORD)
-CLIENT_ID = '0ccc1c2682b5902cd9a1'
-CLIENT_SECRET = '97495b935f65db6dc128c17191837d432723c3f0'
+CLIENT_ID = ''
+CLIENT_SECRET = ''
 OAUTH = '?client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET
 
 def get_access_token(username, password):
@@ -66,7 +66,7 @@ def search_for_users(query, token):
             print(i['login'] + " - hireable: " + str(hireable))
             j += 1
 
-    f = open('users_hireable.json', 'w')
+    f = open('users_hireable_brute_force.json', 'w')
     f.write(json.dumps(list_hireables))
     f.close()
 
@@ -88,7 +88,7 @@ def search_for_users(query, token):
                 users = [list_hireables[i], list_hireables[l]]
                 list_of_reciprocity.append(users)
 
-    f = open('cliques.json', 'w')
+    f = open('cliques_brute_force.json', 'w')
     f.write(json.dumps(list_of_reciprocity))
     f.close()
     print(list_of_reciprocity)
